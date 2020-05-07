@@ -1,0 +1,77 @@
+cramer = function(d, MLE){
+  n = length(d)
+  values = sort(unique(d))
+  p = dgeom(values, MLE)
+  e = p*n
+  o = as.vector(table(d))
+  Z = c()
+  for (ind1 in 1:length(values)){
+    Z[ind1] = sum(o[1:ind1]-e[1:ind1])
+  }
+  return ((1/n)*sum(Z**2*p))
+}
+
+alg1 = function(n, t){
+  N = 0
+  V = 0
+  I = t+n-1
+  k = c()
+  while (N<n-1){
+    p = runif(1)
+    if (p<(n-1-N)/(t+n-1-N-V)){
+      k = c(I,k)
+      N = N+1
+      I = I-1
+    }
+    else{
+      V = V+1
+      I = I-1
+    }
+  }
+  return(k)
+}
+
+randombars = function(n,t){
+  s1 = alg1(n, t)
+  final = c(s1[1]-1)
+  for (ind in 2:length(s1)){
+    val = s1[ind]-ind-(s1[ind-1]-(ind-1))
+    final = append(final, val)
+  }
+  final = append(final, t-(s1[length(s1)]-(n-1)))
+  return (final)
+}
+
+
+vvv = 800
+sig = 0.05
+count2 = 0
+for (ooo in 1:vvv){
+#Alternative
+n = 25
+q = 0.3
+beta = 1.2
+d = rdweibull(n, q, beta, zero = TRUE)
+t = sum(d)
+
+
+mmm = 500
+
+MLE = n/(sum(d)+n)
+
+CO = cramer(d, MLE)
+
+C = c()
+for (pp in 1:mmm){
+  s = randombars(n,t)
+  C[pp] = cramer(s, MLE)
+}
+
+condpvalue = length(C[C > CO])/length(C)
+if (condpvalue < sig){
+  count2 = count2 + 1
+}
+}
+print(100*count2/vvv)
+library(beepr)
+beep()
