@@ -72,5 +72,10 @@ condpvalue = length(C[C > CO])/length(C)
 if (condpvalue < sig){
   count2 = count2 + 1
 }
+if (condpvalue < sig2){
+  count3 = count3 + 1
 }
-print(100*count2/vvv)
+}
+
+cat("significance level", sig, "power is", 100*count2/vvv)
+cat("significance level", sig2, "power is", 100*count3/vvv)
