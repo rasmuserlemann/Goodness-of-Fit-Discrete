@@ -83,6 +83,7 @@ randombars = function(n,t){
 vvv = 500
 sig = 0.05
 count2 = 0
+count3 = 0
 for (ooo in 1:vvv){
 #Alternative
 n = 100
