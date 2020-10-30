@@ -10,9 +10,10 @@ Test statistics functions are CR, SB, SBabs, theta, SW, SWL, SWU. The first one 
 ##Setup
 To run the power simulations, choose the alternative. Each alternative that was studied in the paper, has a separate function for it. For example, if the sample comes from the Beta-Geometric distribution, use the function 
 ```
-powerB
+powerB(n,a,b,level,number,antsim)
 ```
-Parameters in the alternative distribution can be changed inside the function body. To continue our example, for the Beta-Geometric case, we would change 
+Parameters in the alternative distribution can be changed by variables
 ```
-rbetageom(n,a,b)
+a,b
 ```
+Other variables control the sample size, significance level, number of Monte Carlo power simulations and number of Monte Carlo p-value simulations.
